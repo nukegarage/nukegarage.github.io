@@ -110,66 +110,73 @@
     const sheetId = '1VLDlBu3U1_guQTpsMYjnlcVsxmewhtKMr15uAc8AtnA';
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
 
-   async function fetchMeals() {
-    try {
-        const response = await fetch(url);
-        const data = await response.text();
-        
-        const rows = data.split('\n').slice(1).filter(row => row.trim() !== "");
-        const menuElement = document.getElementById('menu');
+    async function fetchMeals() {
+        try {
+            const response = await fetch(url);
+            const data = await response.text();
+            
+            const rows = data.split('\n').slice(1).filter(row => row.trim() !== "");
+            const menuElement = document.getElementById('menu');
 
-        let htmlContent = '';
-        let generalNote = ""; // We'll store the note here
+            let htmlContent = '';
+            let allGeneralNotes = []; // Array to hold notes from H2 through H8
 
-        rows.forEach((row, index) => {
-            const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-            if (cols.length >= 2) {
-                const day = cols[0].replace(/"/g, "").trim();
-                const meal = cols[1].replace(/"/g, "").trim();
-                const notes = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
-                const date = cols[6] ? cols[6].replace(/"/g, "").trim() : "";
-                const notes1 = cols[3] ? cols[3].replace(/"/g, "").trim() : "";
-                const notes2 = cols[4] ? cols[4].replace(/"/g, "").trim() : "";
-                const notes3 = cols[5] ? cols[5].replace(/"/g, "").trim() : "";
-                
-                // Grab the General Note from Column H (index 7) of the very first row
-                if (index === 0 && cols[7]) {
-                    generalNote = cols[7].replace(/"/g, "").trim();
-                }
+            rows.forEach((row, index) => {
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (cols.length >= 2) {
+                    const day = cols[0].replace(/"/g, "").trim();
+                    const meal = cols[1].replace(/"/g, "").trim();
+                    const notes0 = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
+                    const notes1 = cols[3] ? cols[3].replace(/"/g, "").trim() : "";
+                    const notes2 = cols[4] ? cols[4].replace(/"/g, "").trim() : "";
+                    const notes3 = cols[5] ? cols[5].replace(/"/g, "").trim() : "";
+                    const date = cols[6] ? cols[6].replace(/"/g, "").trim() : "";
+                    
+                    // NEW: Collect notes from Column H (index 7) for every row
+                    if (cols[7] && cols[7].replace(/"/g, "").trim() !== "") {
+                        allGeneralNotes.push(cols[7].replace(/"/g, "").trim());
+                    }
 
-                htmlContent += `
-                    <div class="day-card">
-                        <div class="day-header">
-                            <span class="day-name">${day}</span>
-                            ${date ? `<span class="day-date">— ${date}</span>` : ''}
+                    htmlContent += `
+                        <div class="day-card">
+                            <div class="day-header">
+                                <span class="day-name">${day}</span>
+                                ${date ? `<span class="day-date">— ${date}</span>` : ''}
+                            </div>
+                            <div class="meal-name">${meal}</div>
+                            <div style="margin-top: auto;">
+                                ${notes0 ? `<div class="meal-notes">${notes0}</div>` : ''}
+                                ${notes1 ? `<div class="meal-notes">${notes1}</div>` : ''}
+                                ${notes2 ? `<div class="meal-notes">${notes2}</div>` : ''}
+                                ${notes3 ? `<div class="meal-notes">${notes3}</div>` : ''}
+                            </div>
                         </div>
-                        <div class="meal-name">${meal}</div>
-                        ${notes ? `<div class="meal-notes">${notes}</div>` : ''}
-                        ${notes1 ? `<div class="meal-notes">${notes1}</div>` : ''}
-                        ${notes2 ? `<div class="meal-notes">${notes2}</div>` : ''}
-                        ${notes3 ? `<div class="meal-notes">${notes3}</div>` : ''}
+                    `;
+                }
+            });
+
+            // Convert the array of notes into a bulleted list for the 8th box
+            const notesListHtml = allGeneralNotes.length > 0 
+                ? allGeneralNotes.map(note => `<div class="meal-notes" style="color: var(--chalk-main); opacity: 1;">${note}</div>`).join('')
+                : "No extra notes!";
+
+            // 8th Box with General Note
+            htmlContent += `
+                <div class="day-card" style="border: 2px solid var(--chalk-accent);">
+                    <div class="day-name" style="color: var(--chalk-main); border-bottom: 1px solid var(--chalk-accent); margin-bottom: 10px;">
+                        Weekly Notes
                     </div>
-                `;
-            }
-        });
+                    <div style="font-size: 1rem; line-height: 1.4;">
+                        ${notesListHtml}
+                    </div>
+                </div>`;
 
-        // The 8th Box: Now displays your General Note
-        htmlContent += `
-            <div class="day-card" style="border: 2px solid var(--chalk-accent);">
-                <div class="day-name" style="color: var(--chalk-main); border-bottom: 1px solid var(--chalk-accent); margin-bottom: 10px;">
-                    Notes
-                </div>
-                <div class="meal-notes" style="border: none; font-size: 1.1rem; color: var(--chalk-main); opacity: 1;">
-                    ${generalNote || "No extra notes this week!"}
-                </div>
-            </div>`;
+            menuElement.innerHTML = htmlContent;
 
-        menuElement.innerHTML = htmlContent;
-
-    } catch (error) {
-        document.getElementById('menu').innerHTML = "Error loading menu.";
+        } catch (error) {
+            document.getElementById('menu').innerHTML = "Error loading menu.";
+        }
     }
-}
 
     window.onload = fetchMeals;
 </script>
