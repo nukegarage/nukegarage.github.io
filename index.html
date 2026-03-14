@@ -132,7 +132,7 @@
                 const notes2 = cols[4] ? cols[4].replace(/"/g, "").trim() : "";
                 const notes3 = cols[5] ? cols[5].replace(/"/g, "").trim() : "";
                 
-                // Grab the General Note from Column E (index 4) of the very first row
+                // Grab the General Note from Column H (index 7) of the very first row
                 if (index === 0 && cols[7]) {
                     generalNote = cols[7].replace(/"/g, "").trim();
                 }
@@ -144,7 +144,7 @@
                             ${date ? `<span class="day-date">— ${date}</span>` : ''}
                         </div>
                         <div class="meal-name">${meal}</div>
-                        ${notes ? `<div class="meal-notes">${notes}</div>` : ''}
+                        ${notes ? `<div class="meal-notes">${notes}{notes1}{notes2}{notes3}{notes4}</div>` : ''}
                     </div>
                 `;
             }
