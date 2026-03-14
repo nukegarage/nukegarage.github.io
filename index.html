@@ -171,12 +171,16 @@
                     <div class="day-name" style="color: var(--chalk-main); border-bottom: 1px solid var(--chalk-accent); margin-bottom: 10px">
                         Weekly Notes
                     </div>
-                    <div style="font-size: 1rem; line-height: 1.4;">
+                    <div style="font-size: 1.5rem; line-height: 1.8;">
                         ${notesListHtml}
                     </div>
                 </div>`;
 
             menuElement.innerHTML = htmlContent;
+
+            // 300000 milliseconds = 5 minutes
+            setTimeout(fetchMeals, 300000); 
+            console.log("Timer set: Refreshing in 5 minutes...");
 
         } catch (error) {
             document.getElementById('menu').innerHTML = "Error loading menu.";
