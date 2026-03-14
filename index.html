@@ -34,24 +34,23 @@
             padding-bottom: 10px;
         }
 
-        /* 2x4 Grid Setup */
         .menu-container { 
             display: grid; 
-            grid-template-columns: 1fr 1fr; /* Exactly 2 columns */
-            grid-template-rows: repeat(4, auto); /* Exactly 4 rows */
-            gap: 0; /* Removing gap to use internal borders for a "grid line" look */
+            grid-template-columns: 1fr 1fr; 
+            grid-template-rows: repeat(4, auto); 
+            gap: 0; 
             width: 100%; 
             max-width: 1000px;
-            border: 2px solid rgba(255,255,255,0.3); /* Outer chalkboard frame */
+            border: 2px solid rgba(255,255,255,0.3); 
         }
 
         .day-card { 
             background: transparent;
             padding: 25px;
-            border: 1px dashed rgba(255, 255, 255, 0.2); /* Chalk grid lines */
+            border: 1px dashed rgba(255, 255, 255, 0.2); 
             display: flex;
             flex-direction: column;
-            min-height: 150px;
+            min-height: 180px; /* Slightly taller for extra notes */
         }
 
         .day-header {
@@ -77,19 +76,27 @@
         .meal-name { 
             font-size: 1.6rem; 
             line-height: 1.2;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
         
+        /* Styled as a list item */
         .meal-notes {
             color: var(--chalk-accent);
             font-size: 0.85rem;
             font-style: italic;
-            margin-top: auto; /* Pushes notes to the bottom of the card */
-            padding-top: 10px;
-            opacity: 0.7;
+            opacity: 0.8;
+            margin-top: 4px;
+            padding-left: 12px;
+            position: relative;
         }
 
-        /* Mobile Fix: Stack into 1 column so it's readable on phones */
+        .meal-notes::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--chalk-main);
+        }
+
         @media (max-width: 700px) {
             .menu-container {
                 grid-template-columns: 1fr;
@@ -103,9 +110,7 @@
 
     <h1>Dinner Menu</h1>
 
-    <div class="menu-container" id="menu">
-        </div>
-
+    <div class="menu-container" id="menu"></div>
 <script>
     const sheetId = '1VLDlBu3U1_guQTpsMYjnlcVsxmewhtKMr15uAc8AtnA';
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
