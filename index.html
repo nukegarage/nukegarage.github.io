@@ -3,19 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <title>Weekly Dinner Menu</title>
-    <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; display: flex; justify-content: center; padding: 20px; }
-        .menu-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; width: 100%; max-width: 1000px; }
-        .day-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-align: center; }
-        .day-name { font-weight: bold; color: #333; border-bottom: 2px solid #ffcc00; margin-bottom: 10px; text-transform: uppercase; }
-        .meal-name { color: #555; font-size: 1.1em; }
-    </style>
+<style>
+    :root {
+        --primary: #2d3436;
+        --accent: #0984e3;
+        --bg: #dfe6e9;
+        --card-bg: #ffffff;
+    }
+
+    body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        background-color: var(--bg);
+        color: var(--primary);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 40px 20px;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-bottom: 3px solid var(--accent);
+        padding-bottom: 10px;
+    }
+
+    .menu-container { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+        gap: 20px; 
+        width: 100%; 
+        max-width: 1200px; 
+    }
+
+    .day-card { 
+        background: var(--card-bg); 
+        padding: 25px; 
+        border-radius: 15px; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
+        transition: transform 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-left: 5px solid var(--accent);
+    }
+
+    .day-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .day-name { 
+        font-size: 0.9rem;
+        font-weight: 800; 
+        color: var(--accent); 
+        margin-bottom: 8px; 
+        text-transform: uppercase; 
+        letter-spacing: 1px;
+    }
+
+    .meal-name { 
+        color: var(--primary); 
+        font-size: 1.4rem; 
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    /* Mobile optimization */
+    @media (max-width: 600px) {
+        .menu-container {
+            grid-template-columns: 1fr;
+        }
+        h1 { font-size: 1.5rem; }
+    }
+</style>
 </head>
+    
 <body>
 
-<div class="menu-container" id="menu">
-    <p>Loading dinner...</p>
-</div>
+    <h1>Weekly Dinner Menu</h1>
+
+    <div class="menu-container" id="menu">
+        <div class="day-card">
+            <div class="meal-name">Fetching the menu...</div>
+        </div>
+    </div>
+
 <script>
     // 1. PASTE YOUR SHEET ID HERE
     const sheetId = '1VLDlBu3U1_guQTpsMYjnlcVsxmewhtKMr15uAc8AtnA';
@@ -66,6 +143,6 @@
     // Run the function when the page loads
     window.onload = fetchMeals;
 </script>
-
 </body>
+    
 </html>
