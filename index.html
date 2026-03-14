@@ -97,6 +97,16 @@
             color: var(--chalk-main);
         }
 
+                /* Styled as a list item */
+        .gen-notes {
+            color: var(--chalk-accent);
+            font-size: 1.4rem;
+            opacity: 0.8;
+            margin-top: 4px;
+            padding-left: 12px;
+            position: relative;
+        }
+        
         @media (max-width: 700px) {
             .menu-container {
                 grid-template-columns: 1fr;
@@ -162,7 +172,7 @@
 
             // Convert the array of notes into a bulleted list for the 8th box
             const notesListHtml = allGeneralNotes.length > 0 
-                ? allGeneralNotes.map(note => `<div class="meal-notes" style="color: var(--chalk-main); opacity: 1;">${note}</div>`).join('')
+                ? allGeneralNotes.map(note => `<div class="gen-notes" style="color: var(--chalk-main); opacity: 1;">${note}</div>`).join('')
                 : "No extra notes!";
 
             // 8th Box with General Note
@@ -171,7 +181,7 @@
                     <div class="day-name" style="color: var(--chalk-main); border-bottom: 1px solid var(--chalk-accent); margin-bottom: 10px">
                         Weekly Notes
                     </div>
-                    <div style="font-size: 2rem; line-height: 1.8;">
+                    <div style="font-size: 1rem; line-height: 1.4;">
                         ${notesListHtml}
                     </div>
                 </div>`;
