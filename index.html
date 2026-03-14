@@ -52,10 +52,6 @@
         border-left: 5px solid var(--accent);
     }
 
-    .day-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    }
 
     .day-name { 
         font-size: 0.9rem;
@@ -72,7 +68,15 @@
         font-weight: 500;
         line-height: 1.2;
     }
-
+    
+    .meal-notes {
+        color: #777;
+        font-size: 0.9rem;
+        font-style: italic;
+        margin-top: 10px;
+        border-top: 1px dashed #ddd;
+        padding-top: 10px;
+    }
     /* Mobile optimization */
     @media (max-width: 600px) {
         .menu-container {
@@ -118,11 +122,13 @@
                 if (cols.length >= 2) {
                     const day = cols[0].replace(/"/g, "").trim();
                     const meal = cols[1].replace(/"/g, "").trim();
+                    const notes = cols[2] ? cols[2].replace(/"/g, "").trim() : "";
 
                     htmlContent += `
                         <div class="day-card">
                             <div class="day-name">${day}</div>
                             <div class="meal-name">${meal}</div>
+                             <div class="meal-notes">${meal}</div>
                         </div>
                     `;
                 }
