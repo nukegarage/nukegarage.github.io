@@ -144,7 +144,10 @@
                             ${date ? `<span class="day-date">— ${date}</span>` : ''}
                         </div>
                         <div class="meal-name">${meal}</div>
-                        ${notes ? `<div class="meal-notes">${notes}{notes1}{notes2}{notes3}{notes4}</div>` : ''}
+                        ${notes ? `<div class="meal-notes">${notes}</div>` : ''}
+                        ${notes1 ? `<div class="meal-notes">${notes1}</div>` : ''}
+                        ${notes2 ? `<div class="meal-notes">${notes2}</div>` : ''}
+                        ${notes3 ? `<div class="meal-notes">${notes3}</div>` : ''}
                     </div>
                 `;
             }
