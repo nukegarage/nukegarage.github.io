@@ -3,97 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <title>Weekly Dinner Menu</title>
-<style>
-    :root {
-        --primary: #2d3436;
-        --accent: #0984e3;
-        --bg: #dfe6e9;
-        --card-bg: #ffffff;
-    }
-
-    body { 
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        background-color: var(--bg);
-        color: var(--primary);
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-        padding: 40px 20px;
-    }
-
-    h1 {
-        margin-bottom: 30px;
-        font-weight: 300;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        border-bottom: 3px solid var(--accent);
-        padding-bottom: 10px;
-    }
-
-    .menu-container { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-        gap: 20px; 
-        width: 100%; 
-        max-width: 1200px; 
-    }
-
-    .day-card { 
-        background: var(--card-bg); 
-        padding: 25px; 
-        border-radius: 15px; 
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05); 
-        transition: transform 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-left: 5px solid var(--accent);
-    }
-
-
-    .day-name { 
-        font-size: 0.9rem;
-        font-weight: 800; 
-        color: var(--accent); 
-        margin-bottom: 8px; 
-        text-transform: uppercase; 
-        letter-spacing: 1px;
-    }
-
-    .meal-name { 
-        color: var(--primary); 
-        font-size: 1.4rem; 
-        font-weight: 500;
-        line-height: 1.2;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chalkboard Dinner Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     
-    .meal-notes {
-        color: #777;
-        font-size: 0.9rem;
-        font-style: italic;
-        margin-top: 10px;
-        border-top: 1px dashed #ddd;
-        padding-top: 10px;
-    }
-    /* Mobile optimization */
-    @media (max-width: 600px) {
-        .menu-container {
-            grid-template-columns: 1fr;
+    <style>
+        :root {
+            /* Text color: A creamy off-white, softer than pure white */
+            --chalk-main: #f9f9f9; 
+            /* Accent color: A pale, vintage blue chalk */
+            --chalk-accent: #aed9e0; 
+            /* Background: A very dark slate color */
+            --slate-bg: #2c3e50; 
         }
-        h1 { font-size: 1.5rem; }
-    }
-</style>
+
+        body { 
+            font-family: 'Special Elite', 'Courier New', Courier, monospace; 
+            background-color: var(--slate-bg);
+            /* Add a subtle texture to the slate background */
+            background-image: url('https://www.transparenttextures.com/patterns/dark-dot-2.png');
+            color: var(--chalk-main);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            margin-bottom: 50px;
+            font-weight: 300;
+            font-size: 3rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--chalk-accent);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3); /* Subtle depth on the title */
+            border-bottom: 2px dashed var(--chalk-main);
+            padding-bottom: 15px;
+        }
+
+        /* Container: We switch from a grid to a single flex column */
+        .menu-container { 
+            display: flex;
+            flex-direction: column;
+            width: 100%; 
+            max-width: 900px; /* Narrower for a list format */
+            gap: 0; /* Removing the gap so the cards connect to the chalk line */
+        }
+
+        /* Card: Removing shadows, background, and grid borders */
+        .day-card { 
+            background: transparent;
+            padding: 30px 15px;
+            border-radius: 0;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            text-align: left;
+            /* We replace the border-left with a large border-bottom (the chalk line) */
+            border-bottom: 3px dashed rgba(255, 255, 255, 0.4); 
+            width: 100%;
+            position: relative;
+        }
+
+        /* Remove the chalk line from the very last item */
+        .day-card:last-of-type {
+            border-bottom: none;
+        }
+
+        .day-name { 
+            font-size: 1rem;
+            font-weight: 400; 
+            color: var(--chalk-accent); 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+        }
+
+        .meal-name { 
+            color: var(--chalk-main); 
+            font-size: 2.2rem; /* Larger meal name for easy viewing */
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+        
+        .meal-notes {
+            color: var(--chalk-accent);
+            font-size: 1rem;
+            font-style: italic;
+            margin-top: 15px;
+            /* Notes get their own small section, still without borders */
+            border-top: 1px dotted rgba(255,255,255,0.2);
+            padding-top: 15px;
+            opacity: 0.8;
+        }
+
+        /* Mobile optimization: Making text smaller so it doesn't wrap awkwardly */
+        @media (max-width: 600px) {
+            h1 { font-size: 2.2rem; }
+            .meal-name { font-size: 1.6rem; }
+            .day-card { padding: 20px 10px; }
+        }
+    </style>
+    
 </head>
     
 <body>
 
-    <h1>Weekly Dinner Menu</h1>
+    <h1>DINNER MENU</h1>
 
     <div class="menu-container" id="menu">
-        <div class="day-card">
-            <div class="meal-name">Fetching the menu...</div>
+        <div class="day-card" style="border: none;">
+            <div class="meal-name">Prepping the slate...</div>
         </div>
     </div>
 
@@ -150,5 +177,5 @@
     window.onload = fetchMeals;
 </script>
 </body>
-    
 </html>
+
